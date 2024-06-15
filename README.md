@@ -54,4 +54,7 @@ A demo Android app to demonstrate fintech services, showcasing key functionaliti
 4. Create an account or if you already have one, sign in and continue.
 
 ## Screenshots
-![Alt text](/relative/path/to/img.jpg?raw=true "Optional Title")
+
+![Screenshot_20240615_171202](https://github.com/RotimiDev/demo-fintech-app/assets/92338525/d56bdabd-1da9-4d75-8ec7-6edc96a38624)
+![Screenshot_20240615_171237](https://github.com/RotimiDev/demo-fintech-app/assets/92338525/097ae121-9628-4478-abc7-8ffc16e326e2)![Screenshot_20240615_171334](https://github.com/RotimiDev/demo-fintech-app/assets/92338525/fbd4f60a-dc75-430e-8e91-8b35297ace00)
+
