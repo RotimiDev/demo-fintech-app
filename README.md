@@ -46,12 +46,13 @@ A demo Android app to demonstrate fintech services, showcasing key functionaliti
   - Room
   - LiveData
   - ViewModel
-  - JUnit, Mockito
+  - JUnit,
+  - Mockito
 
 ## How to Run
 
 1. Clone the repository.
-2. Open the project in Android Studio.
+2. Open the project in Android Studio, preferably Hedgehog.
 3. Run the application on an Android device or emulator.
 4. Create an account or if you already have one, sign in and continue.
 
