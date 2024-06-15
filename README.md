@@ -51,4 +51,7 @@ A demo Android app to demonstrate fintech services, showcasing key functionaliti
 1. Clone the repository.
 2. Open the project in Android Studio.
 3. Run the application on an Android device or emulator.
-4. Create an account or if already have an account, just sign in and continue.
+4. Create an account or if you already have one, sign in and continue.
+
+## Screenshots
+![Alt text](/relative/path/to/img.jpg?raw=true "Optional Title")
