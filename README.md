@@ -46,6 +46,7 @@ A demo Android app to demonstrate fintech services, showcasing key functionaliti
   - Room
   - LiveData
   - ViewModel
+  - JUnit, Mockito
 
 ## How to Run
 
