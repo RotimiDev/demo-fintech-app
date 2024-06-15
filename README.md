@@ -30,6 +30,7 @@ A demo Android app to demonstrate fintech services, showcasing key functionaliti
 ### 5. UI/UX
 
 - No Figma design was used; everything was created based on familiarity with fintech apps.
+- Icons from Flaticon
 - Feedback for actions (error/success messages).
 
 ## Technical Details
