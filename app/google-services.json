@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "197959788490",
+    "project_id": "vpd-money-assessment",
+    "storage_bucket": "vpd-money-assessment.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:197959788490:android:587a5d4e9c37d51a67d133",
+        "android_client_info": {
+          "package_name": "com.akeemrotimi.vpdmoneyassessment"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCN6C8G40q9FMUP3AaudSn_6-ybrruYcbY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
