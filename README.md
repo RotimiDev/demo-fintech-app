@@ -36,9 +36,10 @@ A demo Android app to demonstrate fintech services, showcasing key functionaliti
 
 - **Architecture:** MVVM (Model-View-ViewModel)
 - **Dependency management:** Version catalog
-- **Programming Language:** Kotlin
+- **Programming Language:** Kotlin, Compose for UI
 - **Libraries:**
   - Firebase Authentication
+  - Material3
   - RecyclerView for Compose (Lazy list)
   - Room
   - LiveData
