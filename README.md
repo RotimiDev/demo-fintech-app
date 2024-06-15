@@ -37,6 +37,8 @@ A demo Android app to demonstrate fintech services, showcasing key functionaliti
 - **Architecture:** MVVM (Model-View-ViewModel)
 - **Dependency management:** Version catalog
 - **Programming Language:** Kotlin, Compose for UI
+- **IDE:** Android Studio Hedgehog | 2023.1.1 Patch 2
+
 - **Libraries:**
   - Firebase Authentication
   - Material3
@@ -44,7 +46,6 @@ A demo Android app to demonstrate fintech services, showcasing key functionaliti
   - Room
   - LiveData
   - ViewModel
-  - **IDE:** Android Studio Hedgehog | 2023.1.1 Patch 2
 
 ## How to Run
 
