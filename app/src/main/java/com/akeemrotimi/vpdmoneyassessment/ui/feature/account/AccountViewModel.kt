@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.akeemrotimi.vpdmoneyassessment.data.model.Account
 import com.google.firebase.auth.FirebaseAuth
 
-class AccountViewModel : ViewModel() {
+class AccountViewModel(firebaseAuth: FirebaseAuth) : ViewModel() {
     private val _sourceAccount = MutableLiveData<Account?>()
     val sourceAccount: LiveData<Account?> get() = _sourceAccount
 
@@ -14,7 +14,7 @@ class AccountViewModel : ViewModel() {
     val accounts: LiveData<List<Account>> get() = _accounts
 
     init {
-        val user = FirebaseAuth.getInstance().currentUser
+        val user = firebaseAuth.currentUser
         val nameParts = user?.displayName?.split(" ")
         val firstName = nameParts?.firstOrNull() ?: "Unknown"
         val lastName = nameParts?.lastOrNull() ?: "User"
@@ -39,7 +39,14 @@ class AccountViewModel : ViewModel() {
                 id = 2,
                 name = "Joseph Parker",
                 bankName = "First Bank",
-                accountNumber = "2412403012",
+                accountNumber = "4651240301",
+                accountBalance = 30000.00
+            ),
+            Account(
+                id = 3,
+                name = "Happiness Julius",
+                bankName = "VPD Money",
+                accountNumber = "0012403012",
                 accountBalance = 30000.00
             )
         )

@@ -2,7 +2,6 @@ package com.akeemrotimi.vpdmoneyassessment.ui.feature.account
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -44,16 +43,16 @@ fun AccountScreen(
     sourceAccount: Account?,
     destinationAccounts: List<Account>
 ) {
-    Column {
+    Column(
+        modifier = Modifier.padding(16.dp)
+    ) {
         sourceAccount?.let {
-            Text("Source Account:")
             AccountItem(it)
         }
         Spacer(modifier = Modifier.height(16.dp))
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             items(destinationAccounts) { account ->
                 AccountItem(account)
@@ -88,7 +87,7 @@ fun AccountItem(account: Account) {
                 style = MaterialTheme.typography.titleSmall
             )
             Text(
-                text = "Balance: ₦${account.accountBalance}",
+                text = "₦${String.format("%,.2f", account.accountBalance)}",
                 style = MaterialTheme.typography.titleMedium,
                 color = Color.Black
             )

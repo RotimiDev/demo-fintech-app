@@ -71,9 +71,30 @@ dependencies {
     // Unit Test Libraries
     testImplementation(libs.junit)
 
+    // Mockito for mocking
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.inline)
+
+    // AndroidX Test - Rules library
+    testImplementation(libs.androidx.rules)
+    testImplementation(libs.androidx.core)
+    testImplementation(libs.androidx.core.testing)
+
+    // AndroidX Lifecycle for LiveData and ViewModel test
+    testImplementation(libs.androidx.lifecycle.livedata.core)
+    testImplementation(libs.androidx.lifecycle.viewmodel)
+
     // Android/UI Test Libraries
-    androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // AndroidX Test - Truth
+    testImplementation(libs.androidx.truth)
+
+    // Coroutines test library
+    testImplementation(libs.kotlinx.coroutines.test)
+
+    // Room testing
+    testImplementation(libs.androidx.room.testing)
 
     // Compose BOM
     implementation(libs.androidx.activity.compose)

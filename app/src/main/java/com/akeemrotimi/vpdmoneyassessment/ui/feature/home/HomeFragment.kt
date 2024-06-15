@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.ComposeView
@@ -17,6 +18,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.room.Room
 import com.akeemrotimi.vpdmoneyassessment.R
 import com.akeemrotimi.vpdmoneyassessment.data.local.AppDatabase
+import com.akeemrotimi.vpdmoneyassessment.data.model.Account
 import com.akeemrotimi.vpdmoneyassessment.data.model.Transaction
 import com.akeemrotimi.vpdmoneyassessment.ui.feature.account.AccountViewModel
 import kotlinx.coroutines.launch
@@ -27,7 +29,10 @@ class HomeFragment : Fragment() {
     private lateinit var database: AppDatabase
     private val navController by lazy { findNavController() }
     private var transactions by mutableStateOf(emptyList<Transaction>())
-    private var selectedItem by mutableStateOf(0)
+    private var selectedItem by mutableIntStateOf(0)
+    private var searchQuery by mutableStateOf("")
+    private var destinationAccounts by mutableStateOf(emptyList<Account>())
+    private var sourceAccount by mutableStateOf<Account?>(null)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,20 +45,22 @@ class HomeFragment : Fragment() {
 
         return ComposeView(requireContext()).apply {
             setContent {
-                val sourceAccount by accountViewModel.sourceAccount.observeAsState()
-                val userBalance = sourceAccount?.accountBalance ?: 0.0
-                val userName = sourceAccount?.name ?: ""
+                val sourceAccountState by accountViewModel.sourceAccount.observeAsState()
+                val userBalance = sourceAccountState?.accountBalance ?: 0.0
+                val userName = sourceAccountState?.name ?: ""
 
                 HomeScreen(
                     userName = userName,
                     balance = userBalance,
                     transactions = transactions,
                     selectedItem = selectedItem,
-                    onItemSelected = { index ->
-                        selectedItem = index
-                    },
+                    searchQuery = searchQuery,
+                    onSearchQueryChanged = { query -> searchQuery = query },
+                    onItemSelected = { index -> selectedItem = index },
                     onTransferClick = { navController.navigate(R.id.action_homeFragment_to_transferFragment) },
-                    onTransactionClick = { navController.navigate(R.id.action_homeFragment_to_transactionHistoryFragment) }
+                    onTransactionClick = { navController.navigate(R.id.action_homeFragment_to_transactionHistoryFragment) },
+                    sourceAccount = sourceAccount,
+                    destinationAccounts = destinationAccounts
                 )
             }
         }
@@ -62,6 +69,7 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         observeTransactions()
+        observeAccounts()
     }
 
     private fun observeTransactions() {
@@ -69,6 +77,13 @@ class HomeFragment : Fragment() {
             .observe(viewLifecycleOwner) { transactionList ->
                 transactions = transactionList
             }
+    }
+
+    private fun observeAccounts() {
+        accountViewModel.accounts.observe(viewLifecycleOwner) { accounts ->
+            sourceAccount = accounts.firstOrNull()
+            destinationAccounts = accounts.filter { it != sourceAccount }
+        }
     }
 
     fun transfer(amount: Double) {

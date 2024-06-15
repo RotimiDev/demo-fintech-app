@@ -26,10 +26,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,6 +36,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.akeemrotimi.vpdmoneyassessment.R
+import com.akeemrotimi.vpdmoneyassessment.data.model.Account
 import com.akeemrotimi.vpdmoneyassessment.data.model.Transaction
 import com.akeemrotimi.vpdmoneyassessment.ui.feature.account.AccountScreen
 import com.akeemrotimi.vpdmoneyassessment.ui.feature.transaction.TransactionScreen
@@ -53,10 +50,23 @@ private fun HomeScreenPreview() {
         userName = "Mary",
         balance = 1000.00,
         transactions = listOf(),
+        selectedItem = 0,
+        searchQuery = "",
+        onSearchQueryChanged = {},
         onItemSelected = {},
-        selectedItem = 0
+        onTransferClick = {},
+        onTransactionClick = {},
+        sourceAccount = Account(
+            id = 0,
+            name = "",
+            bankName = "",
+            accountNumber = "",
+            accountBalance = 0.00
+        ),
+        destinationAccounts = listOf()
     )
 }
+
 
 @Composable
 fun HomeScreen(
@@ -64,9 +74,13 @@ fun HomeScreen(
     balance: Double,
     transactions: List<Transaction>,
     selectedItem: Int,
+    searchQuery: String,
+    onSearchQueryChanged: (String) -> Unit,
     onItemSelected: (Int) -> Unit,
     onTransferClick: () -> Unit = {},
     onTransactionClick: () -> Unit = {},
+    sourceAccount: Account?,
+    destinationAccounts: List<Account>
 ) {
     Scaffold(
         topBar = { HomeAppBar(userName) },
@@ -78,10 +92,15 @@ fun HomeScreen(
     ) { paddingValues ->
         Box(modifier = Modifier.padding(paddingValues)) {
             when (selectedItem) {
-                0 -> HomeContent(userName, balance, transactions, onTransferClick, onTransactionClick)
+                0 -> HomeContent(
+                    balance,
+                    transactions,
+                    onTransferClick,
+                    onTransactionClick
+                )
                 1 -> TransferScreen()
-                2 -> TransactionScreen()
-                3 -> AccountScreen()
+                2 -> TransactionScreen(transactions, searchQuery, onSearchQueryChanged)
+                3 -> AccountScreen(sourceAccount, destinationAccounts)
             }
         }
     }
@@ -89,7 +108,6 @@ fun HomeScreen(
 
 @Composable
 fun HomeContent(
-    userName: String,
     balance: Double,
     transactions: List<Transaction>,
     onTransferClick: () -> Unit,
@@ -141,7 +159,10 @@ fun ProfileView(userName: String) {
                     .size(48.dp)
             )
             Spacer(modifier = Modifier.width(8.dp))
-            Text(text = "Hi, ${userName.split(" ").first()}", style = MaterialTheme.typography.titleMedium)
+            Text(
+                text = "Hi, ${userName.split(" ").first()}",
+                style = MaterialTheme.typography.titleMedium
+            )
         }
         Image(
             painter = painterResource(id = R.drawable.ic_notification),
@@ -268,7 +289,10 @@ fun RecentTransactions(transactions: List<Transaction>) {
                         )
                     }
                 }
-                Text(text = "₦${String.format("%,.2f", transaction.amount)}", style = MaterialTheme.typography.bodyMedium)
+                Text(
+                    text = "₦${String.format("%,.2f", transaction.amount)}",
+                    style = MaterialTheme.typography.bodyMedium
+                )
             }
             Spacer(modifier = Modifier.height(4.dp))
         }

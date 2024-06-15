@@ -83,30 +83,28 @@ class TransferFragment : Fragment() {
                     onAmountChange = { newAmount ->
                         amount = newAmount
                         amountError = null
-                    },
-                    onTransferButtonClick = {
-                        var valid = true
+                    }
+                ) {
+                    var valid = true
 
-                        if (selectedDestinationAccount == null) {
-                            destinationAccountError =
-                                incorrectAccountNumberError
-                            valid = false
-                        }
+                    if (selectedDestinationAccount == null) {
+                        destinationAccountError =
+                            incorrectAccountNumberError
+                        valid = false
+                    }
 
-                        val transferAmount = amount.toDoubleOrNull() ?: 0.0
-                        val sourceAccountBalance = sourceAccount?.accountBalance ?: 0.0
+                    val transferAmount = amount.toDoubleOrNull() ?: 0.0
+                    val sourceAccountBalance = sourceAccount?.accountBalance ?: 0.0
 
-                        if (transferAmount <= 0 || transferAmount > sourceAccountBalance) {
-                            amountError = insufficientFundsError
-                            valid = false
-                        }
+                    if (transferAmount <= 0 || transferAmount > sourceAccountBalance) {
+                        amountError = insufficientFundsError
+                        valid = false
+                    }
 
-                        if (valid) {
-                            showModal = true
-                        }
-                    },
-                    onBackClick = { navController.navigateUp() }
-                )
+                    if (valid) {
+                        showModal = true
+                    }
+                }
             }
         }
     }

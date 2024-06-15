@@ -43,15 +43,11 @@ class TransactionFragment : Fragment() {
 
                 TransactionScreen(
                     transactions = filteredTransactions,
-                    searchQuery = searchQuery,
-                    onSearchQueryChanged = { newQuery ->
-                        searchQuery = newQuery
-                        transactionViewModel.filterTransactions(newQuery)
-                    },
-                    onBackClick = {
-                        navController.navigateUp()
-                    }
-                )
+                    searchQuery = searchQuery
+                ) { newQuery ->
+                    searchQuery = newQuery
+                    transactionViewModel.filterTransactions(newQuery)
+                }
             }
         }
     }
