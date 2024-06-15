@@ -8,12 +8,12 @@ A demo Android app to demonstrate fintech services, showcasing key functionaliti
 
 ### 1. User Authentication
 
-- A basic sign up and login screen with email/password authentication using Firebase.
+- A basic sign-up and login screen with email/password authentication using Firebase.
 
 ### 2. Account Management
 
 - A simulated list of user accounts with mock data.
-- A display of these accounts in a lazy colunm with balance and bank details.
+- A display of these accounts in a lazy column with balance and bank details.
 
 ### 3. Transfer Interface
 
@@ -56,6 +56,4 @@ A demo Android app to demonstrate fintech services, showcasing key functionaliti
 
 ## Screenshots
 
-![Screenshot_20240615_171202](https://github.com/RotimiDev/demo-fintech-app/assets/92338525/d56bdabd-1da9-4d75-8ec7-6edc96a38624)
-![Screenshot_20240615_171237](https://github.com/RotimiDev/demo-fintech-app/assets/92338525/097ae121-9628-4478-abc7-8ffc16e326e2)![Screenshot_20240615_171334](https://github.com/RotimiDev/demo-fintech-app/assets/92338525/fbd4f60a-dc75-430e-8e91-8b35297ace00)
 
