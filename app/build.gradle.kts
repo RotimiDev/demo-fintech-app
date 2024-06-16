@@ -67,18 +67,15 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
 
-
     // Unit Test Libraries
     testImplementation(libs.junit)
 
     // Mockito for mocking
     testImplementation(libs.mockito.core)
-    testImplementation(libs.mockito.inline)
+    testImplementation(libs.androidx.core.testing)
 
     // AndroidX Test - Rules library
     testImplementation(libs.androidx.rules)
-    testImplementation(libs.androidx.core)
-    testImplementation(libs.androidx.core.testing)
 
     // AndroidX Lifecycle for LiveData and ViewModel test
     testImplementation(libs.androidx.lifecycle.livedata.core)
@@ -86,9 +83,6 @@ dependencies {
 
     // Android/UI Test Libraries
     androidTestImplementation(libs.androidx.espresso.core)
-
-    // AndroidX Test - Truth
-    testImplementation(libs.androidx.truth)
 
     // Coroutines test library
     testImplementation(libs.kotlinx.coroutines.test)
@@ -108,9 +102,6 @@ dependencies {
     implementation(libs.accompanist.systemuicontroller)
     implementation(libs.accompanist.permissions)
     androidTestImplementation( platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
-    debugImplementation(libs.androidx.compose.ui.test.tooling)
-    debugImplementation(libs.androidx.compose.ui.test.manifest)
 
     // Compose Coil
     implementation(libs.coil.compose)
@@ -118,8 +109,8 @@ dependencies {
     // Navigation component
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
-    androidTestImplementation(libs.androidx.navigation.testing)
     implementation(libs.androidx.navigation.compose)
+    androidTestImplementation(libs.androidx.navigation.testing)
 
     // Firebase Authentication
     implementation(libs.firebase.auth)

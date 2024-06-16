@@ -95,4 +95,3 @@ class AccountViewModelFactory(private val firebaseAuth: FirebaseAuth) : ViewMode
         throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
-

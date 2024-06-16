@@ -41,17 +41,31 @@ class SignUpViewModel(application: Application) : AndroidViewModel(application) 
                     user?.updateProfile(profileUpdates)?.addOnCompleteListener { profileTask ->
                         if (profileTask.isSuccessful) {
                             viewModelScope.launch {
-                                saveUserDetailsToDatabase(user.uid, firstName, middleName, lastName, phoneNumber)
+                                saveUserDetailsToDatabase(
+                                    user.uid,
+                                    firstName,
+                                    middleName,
+                                    lastName,
+                                    phoneNumber
+                                )
                                 callback(true)
                             }
                         } else {
                             callback(false)
-                            Toast.makeText(context, "Failed to set user name: ${profileTask.exception?.message}", Toast.LENGTH_LONG).show()
+                            Toast.makeText(
+                                context,
+                                "Failed to set user name: ${profileTask.exception?.message}",
+                                Toast.LENGTH_LONG
+                            ).show()
                         }
                     }
                 } else {
                     callback(false)
-                    Toast.makeText(context, "Sign up failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        context,
+                        "Sign up failed: ${task.exception?.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
     }
