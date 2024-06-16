@@ -50,7 +50,7 @@ fun TransferScreen(
     onSourceAccountChange: (Account) -> Unit = {},
     onDestinationAccountChange: (Account) -> Unit = {},
     onAmountChange: (String) -> Unit = {},
-    onTransferButtonClick: () -> Unit = {},
+    onTransferButtonClick: () -> Unit = {}
 ) {
     Scaffold { paddingValues ->
         Column(
@@ -164,8 +164,7 @@ fun DestinationAccountDropdownMenu(
     var selectedAccount by remember { mutableStateOf<Account?>(null) }
     Box {
         Text(
-            text = selectedAccount?.name
-                ?: stringResource(id = R.string.title_select_destination_account),
+            text = selectedAccount?.name ?: stringResource(id = R.string.title_select_destination_account),
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable { expanded = true }

@@ -38,8 +38,7 @@ class TransferFragment : Fragment() {
     ): View? {
         val firebaseAuth = FirebaseAuth.getInstance()
         val factory = AccountViewModelFactory(firebaseAuth)
-        accountViewModel =
-            ViewModelProvider(requireActivity(), factory)[AccountViewModel::class.java]
+        accountViewModel = ViewModelProvider(requireActivity(), factory)[AccountViewModel::class.java]
 
         navController = findNavController()
         return ComposeView(requireContext()).apply {
@@ -69,10 +68,7 @@ class TransferFragment : Fragment() {
                                 timestamp = System.currentTimeMillis()
                             )
                             transactionViewModel.addTransaction(newTransaction)
-                            accountViewModel.transfer(
-                                selectedDestinationAccount?.id ?: -1,
-                                transferAmount
-                            )
+                            accountViewModel.transfer(selectedDestinationAccount?.id ?: -1, transferAmount)
                             showModal = false
                             navController.navigate(R.id.action_transferFragment_to_transferSuccessfulFragment)
                         }
@@ -96,24 +92,25 @@ class TransferFragment : Fragment() {
                         amount = newAmount
                         amountError = null
                     }
-                )
-                var valid = true
+                ) {
+                    var valid = true
 
-                if (selectedDestinationAccount == null) {
-                    destinationAccountError = incorrectAccountNumberError
-                    valid = false
-                }
+                    if (selectedDestinationAccount == null) {
+                        destinationAccountError = incorrectAccountNumberError
+                        valid = false
+                    }
 
-                val transferAmount = amount.toDoubleOrNull() ?: 0.0
-                val sourceAccountBalance = sourceAccount?.accountBalance ?: 0.0
+                    val transferAmount = amount.toDoubleOrNull() ?: 0.0
+                    val sourceAccountBalance = sourceAccount?.accountBalance ?: 0.0
 
-                if (transferAmount <= 0 || transferAmount > sourceAccountBalance) {
-                    amountError = insufficientFundsError
-                    valid = false
-                }
+                    if (transferAmount <= 0 || transferAmount > sourceAccountBalance) {
+                        amountError = insufficientFundsError
+                        valid = false
+                    }
 
-                if (valid) {
-                    showModal = true
+                    if (valid) {
+                        showModal = true
+                    }
                 }
             }
         }
