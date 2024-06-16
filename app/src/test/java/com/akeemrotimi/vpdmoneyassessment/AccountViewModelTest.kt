@@ -1,4 +1,5 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package com.akeemrotimi.vpdmoneyassessment
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
@@ -102,7 +103,10 @@ class AccountViewModelTest {
         val transferResult = viewModel.transfer(destinationAccountId, transferAmount)
 
         assertTrue(transferResult)
-        assertEquals(initialSourceAccount?.accountBalance?.minus(transferAmount), viewModel.sourceAccount.value?.accountBalance)
+        assertEquals(
+            initialSourceAccount?.accountBalance?.minus(transferAmount),
+            viewModel.sourceAccount.value?.accountBalance
+        )
 
         viewModel.sourceAccount.removeObserver(observer)
     }
@@ -119,7 +123,10 @@ class AccountViewModelTest {
         val transferResult = viewModel.transfer(destinationAccountId, transferAmount)
 
         assertFalse(transferResult)
-        assertEquals(initialSourceAccount?.accountBalance, viewModel.sourceAccount.value?.accountBalance)
+        assertEquals(
+            initialSourceAccount?.accountBalance,
+            viewModel.sourceAccount.value?.accountBalance
+        )
 
         viewModel.sourceAccount.removeObserver(observer)
     }
