@@ -37,29 +37,24 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Initialize the Room database
         database = Room.databaseBuilder(
             requireContext(),
             AppDatabase::class.java, "app_db"
         ).build()
 
-        // Initialize the ViewModel with a factory
         val firebaseAuth = FirebaseAuth.getInstance()
         val factory = AccountViewModelFactory(firebaseAuth)
         accountViewModel =
             ViewModelProvider(requireActivity(), factory)[AccountViewModel::class.java]
 
-        // Observe LiveData and update the Composable UI accordingly
         return ComposeView(requireContext()).apply {
             setContent {
                 val sourceAccountState by accountViewModel.sourceAccount.observeAsState()
                 val accountsState by accountViewModel.accounts.observeAsState(emptyList())
 
-                // Update mutable states with LiveData values
                 sourceAccount = sourceAccountState
                 destinationAccounts = accountsState.filter { it.id != sourceAccountState?.id }
 
-                // Extract values for display
                 val userBalance = sourceAccountState?.accountBalance ?: 0.0
                 val userName = sourceAccountState?.name ?: ""
 

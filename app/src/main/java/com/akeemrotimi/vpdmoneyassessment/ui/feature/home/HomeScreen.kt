@@ -98,9 +98,20 @@ fun HomeScreen(
                     onTransferClick,
                     onTransactionClick
                 )
-                1 -> TransferScreen()
-                2 -> TransactionScreen(transactions, searchQuery, onSearchQueryChanged)
-                3 -> AccountScreen(sourceAccount, destinationAccounts)
+                1 -> TransferScreen(
+                    sourceAccount = sourceAccount,
+                    destinationAccounts = destinationAccounts,
+                    onTransferButtonClick = onTransferClick,
+                )
+                2 -> TransactionScreen(
+                    transactions = transactions,
+                    searchQuery = searchQuery,
+                    onSearchQueryChanged = onSearchQueryChanged
+                )
+                3 -> AccountScreen(
+                    sourceAccount = sourceAccount,
+                    destinationAccounts = destinationAccounts
+                )
             }
         }
     }
