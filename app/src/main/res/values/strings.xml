@@ -34,7 +34,7 @@
     <!-- Error messages -->
     <string name="msg_email_password_required">Email and password are required</string>
     <string name="msg_insufficient_fund">Insufficient funds</string>
-    <string name="msg_incorrect_account_number">Incorrect account number. Input 10 digit number</string>
+    <string name="msg_incorrect_account_number">Please select destination account</string>
     <string name="msg_terms_of_use">Please agree with the terms of use and privacy policy.</string>
     <string name="msg_error_middle_name_required">Middle name is required when first and last name are the same.</string>
 </resources>

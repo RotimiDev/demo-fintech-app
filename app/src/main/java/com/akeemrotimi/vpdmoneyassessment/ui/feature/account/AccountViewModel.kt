@@ -57,30 +57,25 @@ class AccountViewModel(firebaseAuth: FirebaseAuth) : ViewModel() {
         val source = _sourceAccount.value
         val destination = _accounts.value?.find { it.id == destinationAccountId }
 
-        if (source != null && destination != null && source.accountBalance >= amount) {
-            _sourceAccount.value = source.copy(accountBalance = source.accountBalance - amount)
-            updateBalance(destination.id, destination.accountBalance + amount)
-            return true
-        }
+        return if (source != null && destination != null && source.accountBalance >= amount) {
+            val updatedSource = source.copy(accountBalance = source.accountBalance - amount)
+            val updatedDestination =
+                destination.copy(accountBalance = destination.accountBalance + amount)
 
-        return false
+            _sourceAccount.value = updatedSource
+            updateAccounts(updatedSource, updatedDestination)
+            true
+        } else {
+            false
+        }
     }
 
-    fun updateBalance(userId: Int, newBalance: Double) {
-        _accounts.value?.let {
-            val updatedAccounts = it.map { account ->
-                if (account.id == userId) {
-                    account.copy(accountBalance = newBalance)
-                } else {
-                    account
-                }
-            }
-            _accounts.value = updatedAccounts
-        }
-
-        _sourceAccount.value?.let {
-            if (it.id == userId) {
-                _sourceAccount.value = it.copy(accountBalance = newBalance)
+    private fun updateAccounts(updatedSource: Account, updatedDestination: Account) {
+        _accounts.value = _accounts.value?.map { account ->
+            when (account.id) {
+                updatedSource.id -> updatedSource
+                updatedDestination.id -> updatedDestination
+                else -> account
             }
         }
     }

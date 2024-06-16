@@ -102,6 +102,7 @@ dependencies {
     implementation(libs.accompanist.systemuicontroller)
     implementation(libs.accompanist.permissions)
     androidTestImplementation( platform(libs.androidx.compose.bom))
+    debugImplementation(libs.androidx.ui.tooling)
 
     // Compose Coil
     implementation(libs.coil.compose)

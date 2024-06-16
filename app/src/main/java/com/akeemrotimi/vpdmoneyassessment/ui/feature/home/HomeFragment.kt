@@ -40,18 +40,29 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Initialize the Room database
         database = Room.databaseBuilder(
             requireContext(),
             AppDatabase::class.java, "app_db"
         ).build()
 
+        // Initialize the ViewModel with a factory
         val firebaseAuth = FirebaseAuth.getInstance()
         val factory = AccountViewModelFactory(firebaseAuth)
-        accountViewModel = ViewModelProvider(this, factory)[AccountViewModel::class.java]
+        accountViewModel =
+            ViewModelProvider(requireActivity(), factory)[AccountViewModel::class.java]
 
+        // Observe LiveData and update the Composable UI accordingly
         return ComposeView(requireContext()).apply {
             setContent {
                 val sourceAccountState by accountViewModel.sourceAccount.observeAsState()
+                val accountsState by accountViewModel.accounts.observeAsState(emptyList())
+
+                // Update mutable states with LiveData values
+                sourceAccount = sourceAccountState
+                destinationAccounts = accountsState.filter { it.id != sourceAccountState?.id }
+
+                // Extract values for display
                 val userBalance = sourceAccountState?.accountBalance ?: 0.0
                 val userName = sourceAccountState?.name ?: ""
 
@@ -86,35 +97,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeAccounts() {
-        accountViewModel.accounts.observe(viewLifecycleOwner) { accounts ->
-            sourceAccount = accounts.firstOrNull()
-            destinationAccounts = accounts.filter { it != sourceAccount }
+        accountViewModel.sourceAccount.observe(viewLifecycleOwner) { account ->
+            sourceAccount = account
         }
-    }
-
-    fun transfer(amount: Double) {
-        val currentAccounts = accountViewModel.accounts.value ?: return
-        val userAccount = currentAccounts.firstOrNull() ?: return
-
-        if (userAccount.accountBalance >= amount) {
-            lifecycleScope.launch {
-                val newTransaction = Transaction(
-                    id = 0,
-                    sourceAccount = "source_account",
-                    destinationAccount = "destination_account",
-                    amount = amount,
-                    timestamp = System.currentTimeMillis()
-                )
-                database.transactionDao().insert(newTransaction)
-
-                val newBalance = userAccount.accountBalance - amount
-                database.userDao().updateUserBalance(userAccount.id, newBalance)
-                accountViewModel.updateBalance(userAccount.id, newBalance)
-
-                Toast.makeText(requireContext(), "Transfer successful", Toast.LENGTH_LONG).show()
-            }
-        } else {
-            Toast.makeText(requireContext(), "Insufficient balance", Toast.LENGTH_LONG).show()
+        accountViewModel.accounts.observe(viewLifecycleOwner) { accounts ->
+            destinationAccounts = accounts.filter { it.id != sourceAccount?.id }
         }
     }
 }
