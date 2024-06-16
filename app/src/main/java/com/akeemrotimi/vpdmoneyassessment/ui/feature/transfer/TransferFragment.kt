@@ -12,18 +12,21 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.akeemrotimi.vpdmoneyassessment.R
 import com.akeemrotimi.vpdmoneyassessment.data.model.Account
 import com.akeemrotimi.vpdmoneyassessment.data.model.Transaction
 import com.akeemrotimi.vpdmoneyassessment.ui.feature.account.AccountViewModel
+import com.akeemrotimi.vpdmoneyassessment.ui.feature.account.AccountViewModelFactory
 import com.akeemrotimi.vpdmoneyassessment.ui.feature.transaction.TransactionViewModel
 import com.akeemrotimi.vpdmoneyassessment.ui.feature.transaction.TransactionViewModelFactory
 import com.akeemrotimi.vpdmoneyassessment.ui.feature.transfer.summary.SummaryBottomSheetView
+import com.google.firebase.auth.FirebaseAuth
 
 class TransferFragment : Fragment() {
-    private val accountViewModel: AccountViewModel by viewModels()
+    private lateinit var accountViewModel: AccountViewModel
     private val transactionViewModel: TransactionViewModel by viewModels {
         TransactionViewModelFactory(requireActivity().application)
     }
@@ -33,6 +36,10 @@ class TransferFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val firebaseAuth = FirebaseAuth.getInstance()
+        val factory = AccountViewModelFactory(firebaseAuth)
+        accountViewModel = ViewModelProvider(this, factory)[AccountViewModel::class.java]
+
         navController = findNavController()
         return ComposeView(requireContext()).apply {
             setContent {
@@ -61,6 +68,7 @@ class TransferFragment : Fragment() {
                                 timestamp = System.currentTimeMillis()
                             )
                             transactionViewModel.addTransaction(newTransaction)
+                            accountViewModel.transfer(selectedDestinationAccount?.id ?: -1, transferAmount)
                             showModal = false
                             navController.navigate(R.id.action_transferFragment_to_transferSuccessfulFragment)
                         }
@@ -88,8 +96,7 @@ class TransferFragment : Fragment() {
                     var valid = true
 
                     if (selectedDestinationAccount == null) {
-                        destinationAccountError =
-                            incorrectAccountNumberError
+                        destinationAccountError = incorrectAccountNumberError
                         valid = false
                     }
 

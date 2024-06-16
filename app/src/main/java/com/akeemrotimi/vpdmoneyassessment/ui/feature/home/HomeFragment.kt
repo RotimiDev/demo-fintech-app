@@ -12,7 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.room.Room
@@ -21,11 +21,13 @@ import com.akeemrotimi.vpdmoneyassessment.data.local.AppDatabase
 import com.akeemrotimi.vpdmoneyassessment.data.model.Account
 import com.akeemrotimi.vpdmoneyassessment.data.model.Transaction
 import com.akeemrotimi.vpdmoneyassessment.ui.feature.account.AccountViewModel
+import com.akeemrotimi.vpdmoneyassessment.ui.feature.account.AccountViewModelFactory
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
-    private val accountViewModel: AccountViewModel by viewModels()
+    private lateinit var accountViewModel: AccountViewModel
     private lateinit var database: AppDatabase
     private val navController by lazy { findNavController() }
     private var transactions by mutableStateOf(emptyList<Transaction>())
@@ -42,6 +44,10 @@ class HomeFragment : Fragment() {
             requireContext(),
             AppDatabase::class.java, "app_db"
         ).build()
+
+        val firebaseAuth = FirebaseAuth.getInstance()
+        val factory = AccountViewModelFactory(firebaseAuth)
+        accountViewModel = ViewModelProvider(this, factory)[AccountViewModel::class.java]
 
         return ComposeView(requireContext()).apply {
             setContent {

@@ -3,6 +3,7 @@ package com.akeemrotimi.vpdmoneyassessment.ui.feature.account
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.akeemrotimi.vpdmoneyassessment.data.model.Account
 import com.google.firebase.auth.FirebaseAuth
 
@@ -52,6 +53,19 @@ class AccountViewModel(firebaseAuth: FirebaseAuth) : ViewModel() {
         )
     }
 
+    fun transfer(destinationAccountId: Int, amount: Double): Boolean {
+        val source = _sourceAccount.value
+        val destination = _accounts.value?.find { it.id == destinationAccountId }
+
+        if (source != null && destination != null && source.accountBalance >= amount) {
+            _sourceAccount.value = source.copy(accountBalance = source.accountBalance - amount)
+            updateBalance(destination.id, destination.accountBalance + amount)
+            return true
+        }
+
+        return false
+    }
+
     fun updateBalance(userId: Int, newBalance: Double) {
         _accounts.value?.let {
             val updatedAccounts = it.map { account ->
@@ -71,3 +85,14 @@ class AccountViewModel(firebaseAuth: FirebaseAuth) : ViewModel() {
         }
     }
 }
+
+class AccountViewModelFactory(private val firebaseAuth: FirebaseAuth) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(AccountViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return AccountViewModel(firebaseAuth) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
+}
+
