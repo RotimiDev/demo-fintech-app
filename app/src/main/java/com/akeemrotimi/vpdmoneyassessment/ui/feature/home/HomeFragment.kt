@@ -73,7 +73,7 @@ class HomeFragment : Fragment() {
                         }
                     },
                     onTransferClick = {
-                        selectedItem = 1
+                        navController.navigate(R.id.action_homeFragment_to_transferFragment)
                     },
                     onTransactionClick = { navController.navigate(R.id.action_homeFragment_to_transactionHistoryFragment) },
                     sourceAccount = sourceAccount,
