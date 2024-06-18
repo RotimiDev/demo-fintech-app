@@ -38,7 +38,8 @@ class TransferFragment : Fragment() {
     ): View? {
         val firebaseAuth = FirebaseAuth.getInstance()
         val factory = AccountViewModelFactory(firebaseAuth)
-        accountViewModel = ViewModelProvider(requireActivity(), factory)[AccountViewModel::class.java]
+        accountViewModel =
+            ViewModelProvider(requireActivity(), factory)[AccountViewModel::class.java]
 
         navController = findNavController()
         return ComposeView(requireContext()).apply {
@@ -68,7 +69,10 @@ class TransferFragment : Fragment() {
                                 timestamp = System.currentTimeMillis()
                             )
                             transactionViewModel.addTransaction(newTransaction)
-                            accountViewModel.transfer(selectedDestinationAccount?.id ?: -1, transferAmount)
+                            accountViewModel.transfer(
+                                selectedDestinationAccount?.id ?: -1,
+                                transferAmount
+                            )
                             showModal = false
                             navController.navigate(R.id.action_transferFragment_to_transferSuccessfulFragment)
                         }

@@ -32,6 +32,7 @@ class HomeFragment : Fragment() {
     private var searchQuery by mutableStateOf("")
     private var destinationAccounts by mutableStateOf(emptyList<Account>())
     private var sourceAccount by mutableStateOf<Account?>(null)
+    private var amount by mutableStateOf("")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,11 +66,20 @@ class HomeFragment : Fragment() {
                     selectedItem = selectedItem,
                     searchQuery = searchQuery,
                     onSearchQueryChanged = { query -> searchQuery = query },
-                    onItemSelected = { index -> selectedItem = index },
-                    onTransferClick = { navController.navigate(R.id.action_homeFragment_to_transferFragment) },
+                    onItemSelected = { index ->
+                        selectedItem = index
+                        if (index == 1) {
+                            navController.navigate(R.id.action_homeFragment_to_transferFragment)
+                        }
+                    },
+                    onTransferClick = {
+                        selectedItem = 1
+                    },
                     onTransactionClick = { navController.navigate(R.id.action_homeFragment_to_transactionHistoryFragment) },
                     sourceAccount = sourceAccount,
-                    destinationAccounts = destinationAccounts
+                    destinationAccounts = destinationAccounts,
+                    amount = amount,
+                    onAmountChanged = { newAmount -> amount = newAmount }
                 )
             }
         }

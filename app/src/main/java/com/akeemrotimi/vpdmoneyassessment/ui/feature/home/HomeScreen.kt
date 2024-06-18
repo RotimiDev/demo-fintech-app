@@ -63,7 +63,9 @@ private fun HomeScreenPreview() {
             accountNumber = "",
             accountBalance = 0.00
         ),
-        destinationAccounts = listOf()
+        destinationAccounts = listOf(),
+        amount = "",
+        onAmountChanged = {}
     )
 }
 
@@ -80,6 +82,8 @@ fun HomeScreen(
     onTransferClick: () -> Unit = {},
     onTransactionClick: () -> Unit = {},
     sourceAccount: Account?,
+    amount: String,
+    onAmountChanged: (String) -> Unit,
     destinationAccounts: List<Account>
 ) {
     Scaffold(
@@ -98,16 +102,21 @@ fun HomeScreen(
                     onTransferClick,
                     onTransactionClick
                 )
+
                 1 -> TransferScreen(
                     sourceAccount = sourceAccount,
+                    amount = amount,
+                    onAmountChange = onAmountChanged,
                     destinationAccounts = destinationAccounts,
                     onTransferButtonClick = onTransferClick,
                 )
+
                 2 -> TransactionScreen(
                     transactions = transactions,
                     searchQuery = searchQuery,
                     onSearchQueryChanged = onSearchQueryChanged
                 )
+
                 3 -> AccountScreen(
                     sourceAccount = sourceAccount,
                     destinationAccounts = destinationAccounts
