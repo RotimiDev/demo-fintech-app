@@ -42,7 +42,7 @@ A demo Android app to demonstrate fintech services, showcasing key functionaliti
 
 - **Libraries:**
   - Firebase Authentication
-  - Material3
+  - Material 3 design system
   - RecyclerView for Compose (Lazy list)
   - Room
   - LiveData
